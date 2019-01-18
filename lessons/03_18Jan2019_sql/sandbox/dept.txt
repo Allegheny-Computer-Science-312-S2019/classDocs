@@ -1,0 +1,8 @@
+
+CREATE TABLE department(
+    ID varchar(4),
+    Dept varchar(4),
+    RoomNum varchar(3)
+);
+
+INSERT INTO department VALUES ("OBC","CP","104" );
