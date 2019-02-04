@@ -1,0 +1,35 @@
+# Query: Who has a sandwich that is over $20, from what department.
+Tables: Tea, Department
+
+# without cost
+SELECT Tea.sandwich, Tea.cost, Department.dept
+FROM Tea, Department
+WHERE Tea.id == Department.id;
+
+# with cost constraint
+SELECT Tea.sandwich, Tea.cost, Department.dept
+FROM Tea, Department
+WHERE Tea.id == Department.id AND Tea.Cost >= 20;
+
+
+
+
+###
+
+# Query: Who has a sandwich that is over $12, from what department and is presenting what material.
+Tables: Tea, Department, Session
+
+SELECT Tea.sandwich, Tea.cost, Department.dept, Session. material
+FROM Tea, Department, Session
+WHERE Tea.id == Department.id AND Tea.id == Session.id;
+
+# sandwiches less than $20
+SELECT Tea.sandwich, Tea.cost, Department.dept, Session. material
+FROM Tea, Department, Session
+WHERE Tea.id == Department.id AND Tea.id == Session.id AND Tea.cost >= 20;
+
+
+# add id
+SELECT Tea.id, Tea.sandwich, Tea.cost, Department.dept, Session. material
+FROM Tea, Department, Session
+WHERE Tea.id == Department.id AND Tea.id == Session.id AND Tea.cost >= 20;
