@@ -1,0 +1,34 @@
+/* 6 Feb 2019 */
+
+/* Enable foreign keys: automatically check any foreign key constraints */
+PRAGMA foreign_keys = ON; /* Enable foreign keys */
+
+DROP TABLE Agent;
+CREATE TABLE Agent (
+id INT PRIMARY KEY,
+lastName VARCHAR,
+registration VARCHAR,
+worksFor VARCHAR,
+FOREIGN KEY(registration) REFERENCES car(name));
+
+/* try adding this data first!! */
+INSERT INTO Agent values (007, 'Bond', 'AstonMartin', 'MI6');
+INSERT INTO Agent values (008, 'Bennet', 'AstonMartin', 'MI6');
+INSERT INTO Agent values (009, 'McBain', 'AstonMartin', 'MI6');
+INSERT INTO Agent values (0010, 'Rufus', 'RustyTruck', 'MI7');
+
+
+/* What went wrong and how do we fix this? */
+
+
+DROP TABLE Car;
+CREATE TABLE Car (
+name VARCHAR PRIMARY KEY,
+registration VARCHAR,
+capacity INT,
+topSpeed INT
+);
+
+  /* more data */
+INSERT INTO Car values ('RustyTruck', 'MI7', 10, 30);
+INSERT INTO Car values ('AstonMartin', 'MI6', 2, 130);

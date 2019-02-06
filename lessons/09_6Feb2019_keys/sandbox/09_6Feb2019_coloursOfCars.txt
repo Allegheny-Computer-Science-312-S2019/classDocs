@@ -1,0 +1,99 @@
+/* Date 6 Feb 2018 */
+
+
+/* ************************************* */
+
+/* Foreign keys */
+
+pragma foreign_keys = on; /* must be turn on for FK to work*/
+
+
+
+/* un-connected tables */
+DROP TABLE Cars;
+CREATE TABLE Cars (model string, year integer, colour string);
+
+INSERT INTO Cars VALUES("VW Bug","2001","blue");
+INSERT INTO Cars VALUES("Toyota Sienna","2001","red");
+
+
+
+DROP TABLE Colours;
+CREATE TABLE Colours (name string unique);
+
+INSERT INTO Colours VALUES("red");
+INSERT INTO Colours VALUES("green");
+INSERT INTO Colours VALUES("blue");
+INSERT INTO Colours VALUES("cyan");
+
+
+
+
+
+/* We connect the tables with foreign keys */
+
+DROP TABLE CarsFK;
+CREATE TABLE CarsFK (model string, year integer, colour string references Colours(name));
+
+
+INSERT INTO CarsFK VALUES("Subaru", "2018", "blue");
+INSERT INTO CarsFK VALUES("Ford", "2017", "red");
+INSERT INTO CarsFK VALUES("Chevy", "2019", "blue");
+INSERT INTO CarsFK VALUES("Toyota", "2019", "Red");
+/* Error: FOREIGN KEY constraint failed */
+INSERT INTO CarsFK VALUES("Toyota", "2016", "green");
+
+
+
+
+
+INSERT INTO CarsFK VALUES("Toyota Sienna", "2001", "Chartreuse");
+/*  Error: FOREIGN KEY constraint failed */
+/* Why the error? */
+
+
+
+INSERT INTO Colours VALUES ("Chartreuse");
+/* Now try adding the Chartreuse car to the CarsFK */
+INSERT INTO CarsFK VALUES("Toyota Sienna", "2001", "Chartreuse");
+
+
+/* This foreign key now ensures (by constraint) that all cars that are added will have a link to the correct colour in the Colour table.  */
+
+/* Our foreign keys allows that rows are not removed if there is a link to another table. */
+delete from Colours where name == "Chartreuse";
+/* Error: FOREIGN KEY constraint failed. */
+/* Why the error? */
+
+
+DELECT FROM CarsFK WHERE model == "Ford";
+DELETE FROM Colours WHERE name == "red";
+
+/* put red back */
+INSERT INTO Colours VALUES("red");
+
+
+
+/* How can we update all rows, across all tables where Chartreuse is a linked entry? */
+/* remake and repopulate the CarsFK table */
+/* note the cascade commands */
+
+DROP TABLE CarsFK_ch;
+CREATE TABLE CarsFK_ch (model string, year integer, colour string references Colours(name) on update cascade on delete cascade);
+
+
+INSERT INTO CarsFK_ch VALUES("Subaru", "2018", "blue");
+INSERT INTO CarsFK_ch VALUES("Ford", "2017", "red");
+INSERT INTO CarsFK_ch VALUES("Chevy", "2019", "blue");
+INSERT INTO CarsFK_ch VALUES("Toyota", "2019", "Red");
+INSERT INTO CarsFK_ch VALUES("Toyota", "2016", "green");
+INSERT INTO CarsFK_ch VALUES("BMW", "2018", "cyan");
+INSERT INTO CarsFK_ch VALUES("Mercedes", "2018", "cyan");
+INSERT INTO CarsFK_ch VALUES("Rolls-Royce", "2018", "cyan");
+
+
+
+update Colours set name = "ROUGE" where name = "cyan";
+
+
+/* note the automatic update in the CarsFK-ch table. */
