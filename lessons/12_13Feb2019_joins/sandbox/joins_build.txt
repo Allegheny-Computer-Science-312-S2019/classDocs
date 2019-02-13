@@ -24,3 +24,23 @@ INSERT INTO tableB VALUES (7,"g");
 INSERT INTO tableB VALUES (8,"h");
 INSERT INTO tableB VALUES (9,"i");
 INSERT INTO tableB VALUES (1,"a");
+
+
+/* inner (left) join */
+SELECT tableA.num
+FROM tableB
+LEFT JOIN tableA
+ON tableA.num == tableB.num;
+
+
+/* inner (left) join */
+SELECT distinct(tableA.num)
+FROM tableB
+LEFT JOIN tableA
+ON tableA.num == tableB.num;
+
+/* inner (right) join */
+SELECT tableB.num
+FROM tableA
+LEFT JOIN tableB
+ON tableA.num == tableB.num;
