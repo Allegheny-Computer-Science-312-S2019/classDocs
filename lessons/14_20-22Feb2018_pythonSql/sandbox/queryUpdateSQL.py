@@ -44,7 +44,7 @@ def query2(): # function in python3
 
 def insert1():
     """Simple Insertion"""
-    
+
     PersonID = "10101A"
     name = "Milder"
     student = "S1A"
@@ -61,9 +61,6 @@ def insert1():
 #end of insert1()
 
 
-
-
-
 ###################################
 # connect to the database
 sqlite3Filename ="myCampusDB.sqlite3"
@@ -77,6 +74,11 @@ print(" My database has been loaded")
 # do something with the database
 # functions
 query1()
-query2()
+query2() # check instructor table before insert
+insert1() # run insert
+query2() # check to see that insertion was made
+
+
+
 # finished; we close the database
 conn.close()
