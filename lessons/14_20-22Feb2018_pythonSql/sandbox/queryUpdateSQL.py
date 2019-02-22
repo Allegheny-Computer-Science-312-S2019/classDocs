@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# 20 and 22 Feb 2019
+
 import sqlite3
 
 def query1(): # function in python3
@@ -40,27 +42,24 @@ def query2(): # function in python3
         print(" i=", i," column 4 of the table :", i[3])
 # end of query2()
 
+def insert1():
+    """Simple Insertion"""
+    
+    PersonID = "10101A"
+    name = "Milder"
+    student = "S1A"
+    deptName = "CompSci"
+    salary =  195000.00
+    #all on one line
 
-def insert1(): # function in python3
-#TODO: complete insert statement
+    myInsert2 = "INSERT INTO instructor VALUES(\"{A}\",\"{B}\",\"{C}\",\"{D}\",{E})".format(A = PersonID, B = name, C = student, D = deptName, E = salary)
 
-    """inserting data in to Instructor table"""
-    insertCommand1 = "SELECT * FROM Instructor"
-    print("My command is: ", insertCommand1)
+    print("  Running this command:\n  ",myInsert2)
 
-    # run my query
-    result = conn.execute(insertCommand1)
+    result = conn.execute(myInsert2)
+    conn.commit() #save the changes
+#end of insert1()
 
-    print("  Result is:", result)
-
-    # collect my results and parse them
-    tables = result.fetchall()
-
-    # print the content to the screen
-    print("  Raw tables data :", tables)
-    for i in tables: # i is the index of the object ("list")
-        print(" i=", i," column 4 of the table :", i[3])
-# end of insert1()
 
 
 
