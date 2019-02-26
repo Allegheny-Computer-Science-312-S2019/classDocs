@@ -1,4 +1,4 @@
-#### classDocs
+#### classDocs for cs312 (Databases)
 #### GitHub Repository
 #### Spring 2019, Allegheny College
 
