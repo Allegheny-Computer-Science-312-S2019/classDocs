@@ -1,0 +1,70 @@
+# Django steps:
+# Date: 5 March 2019
+
+#create a directory where we will be working
+mkdir djangoWorking
+cd djangoWorking
+
+# if necessary or if you are using your own machine, create a virtual environment
+pip install virtualenv
+virtualenv myenv -p python3.6 # setting up virtualenv
+source myenv/bin/activate # activate virtualenv
+
+
+
+# is django installed?
+pip install django # this did not seem to be necessary
+
+# use Django's wizard to build a project
+
+django-admin startproject mysite
+cd mysite/
+python manage.py runserver
+
+#Make the music app
+python manage.py startapp music
+
+# what new files
+find . -not -path '*/\.*'
+
+echo Note: Edit your mysite/mysite/urls.py file
+echo Note: Create/Edit your mysite/music/urls.py file
+echo Note: Edit your mysite/music/views.py file
+
+# connect the database
+python manage.py migrate
+
+#make a superuser
+python manage.py createsuperuser
+
+
+
+# set up the models (music database tables)
+echo Note: Edit your music/models.py file
+
+
+# change the setting to accept and build these new tables
+echo Note: Edit your mysite/settings.py file
+
+
+# integrate the changes to the databases
+python manage.py makemigrations music
+python manage.py migrate
+
+
+# make the changes available
+echo Note: Edit the mysite/music/admin.py file.
+
+
+
+# add some data to the music tables
+python manage.py shell
+
+--- then from Python ---
+from music.models import Album, Song
+Album.objects.all()
+
+a = Album(artist = "The Nelsonions",album_title = "Bluish-blue",genre="Rock",album_logo = "http://schmoesknow.com/wonder-woman-movie-review/50254/")
+## above code is all on one line
+a.save() # writes into the database
+a.id # show the ID (primary key)
