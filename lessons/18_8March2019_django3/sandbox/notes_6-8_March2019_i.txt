@@ -1,0 +1,204 @@
+# Django steps:
+# Date: 5 March 2019
+
+#create a directory where we will be working
+mkdir djangoWorking
+cd djangoWorking
+
+# if necessary or if you are using your own machine, create a virtual environment
+pip install virtualenv
+virtualenv myenv -p python3.6 # setting up virtualenv
+source myenv/bin/activate # activate virtualenv
+
+
+
+# is django installed?
+pip install django # this did not seem to be necessary
+
+# use Django's wizard to build a project
+
+django-admin startproject mysite
+cd mysite/
+python manage.py runserver
+
+#Make the music app
+python manage.py startapp music
+
+# what new files
+find . -not -path '*/\.*'
+
+echo Note: Edit your mysite/mysite/urls.py file
+echo Note: Create/Edit your mysite/music/urls.py file
+echo Note: Edit your mysite/music/views.py file
+
+# connect the database
+python manage.py migrate
+
+#make a superuser
+python manage.py createsuperuser
+
+
+
+# set up the models (music database tables)
+echo Note: Edit your music/models.py file
+
+
+# change the setting to accept and build these new tables
+echo Note: Edit your mysite/settings.py file
+
+#INSTALLED_APPS = [
+#    'music.apps.MusicConfig', # Link Music App to DB
+# ...
+#
+
+# Integrate the changes to the databases: check to see that Albums DB is working
+python manage.py makemigrations music
+python manage.py migrate
+
+
+#####################################
+## Continuing slides: 6 March 2019 ##
+#####################################
+
+
+# Register the databases: Album and Songs
+echo Note: Edit the mysite/music/admin.py file.
+#####
+
+#from django.contrib import admin
+#from .models import Album, Song
+## these tables are from the music/models.py class file
+#admin.site.register(Album)
+#admin.site.register(Song)
+## Register your models here.
+
+
+
+
+# (again) integrate any changes to the databases
+# Running it again after registration may check the code for errors
+python manage.py makemigrations music
+python manage.py migrate
+
+
+# check what the database schema looks like
+./manage.py sqlmigrate music 0001
+
+
+# add some music data to the Album DB
+python manage.py shell
+
+#--- then from Python ---
+#from music.models import Album, Song
+# Album.objects.all()
+# Song.objects.all()
+
+#a = Album(artist = "The Nelsonions",album_title = "Bluish-blue",genre="Rock",album_logo = "http://schmoesknow.com/wonder-woman-movie-review/50254/")
+## above code is all on one line
+#a.save() # writes into the database
+#a.id # show the ID (primary key)
+
+
+a = Album(artist = "The Bill-Browns",
+album_title = "Ready or not",
+genre="Rock",album_logo = "http://schmoesknow.com/wp-content/uploads/2017/05/Wonder-Woman-Movie-Artwork.jpg")
+# above code is all on one line
+##
+a.save() # writes into the database
+##
+a.id # show the ID (primary key)
+
+
+a = Album(artist = "DJ Cool-cumber",
+album_title = "Ignite the night",
+genre="Rock",album_logo = "http://schmoesknow.com/wp-content/uploads/2017/05/Wonder-Woman-Movie-Artwork.jpg")
+# above code is all on one line
+##
+a.save() # writes into the database
+##
+a.id # show the ID (primary key)
+
+
+
+
+#####################################
+## Continuing slides: 8 March 2019 ##
+#####################################
+
+# DETAILS VIEWs: a simple way to determine album information from a link
+# want to call up a specific album number (ID) from the address URLs
+# Sample link: http://127.0.0.1:8000/music/1
+# The ID code is entered using regExpressions, code shown below.
+# url(r'^(?P<album_id>[0-9]+)$', views.detail, name = 'detail'),
+
+echo Note: make this edit to your mysite/music/urls.py file
+
+
+
+
+# We are going to add to the song db table.
+python manage.py shell
+
+#--- then from Python ---
+# from music.models import Album, Song
+# Album.objects.all()
+
+
+# Add "Albums" and "Song" table entries: Rick Astley
+#
+from music.models import Album, Song
+a = Album(artist="Rick Astley",
+album_title ="Whenever You Need Somebody",
+genre="rock", album_logo="https://www.cs.allegheny.edu/sites/obonhamcarter/cs312/graphics/rick.jpg") #Above line: all on one line
+a.save()
+#
+# add a song for the album
+s = Song()
+s.album_id = 2
+s.Album = "Whenever You Need Somebody"
+s.song_title = "Never Gonna Give You Up"
+s.file_type="mp3"
+s.save()
+
+
+# Make a web page DETAIL html file to display the songs
+# note the directory structure where the file is to be stored.
+echo Note: Create/Edit the mysite/music/templates/music/detail.html file.
+#####
+
+<img src = "{{ album.album_logo }}">
+<h1> This is the file: detail.html </h1>
+<ul>
+       <li>Artist: {{ album.artist }} </li>
+       <li>Album Title:  {{ album.album_title }} </li>
+       <li>Genre: {{ album.genre }} </li>
+</ul>
+####
+
+
+
+# echo Note: Edit the mysite/music/views.html file to contain the following.
+
+#####
+from django.http import Http404 # for missing albums
+from django.shortcuts import render
+from django.template import loader
+from .models import Album
+
+def index(request):
+        all_albums = Album.objects.all()
+        template = loader.get_template('music/index.html')
+        return render(request, 'music/index.html',{'all_albums':all_albums})
+# check for valid film_ids.
+
+
+# check for valid album_ids.
+def detail(request, album_id):
+	try: # check to see that the album exists
+		album_current = Album.objects.get(pk=album_id)
+	except Album.DoesNotExist:
+		#display this message
+		raise Http404("Sorry to say but the album does not exist.")
+	return render(request, 'music/detail.html', {'album' : album_current})
+
+#####
