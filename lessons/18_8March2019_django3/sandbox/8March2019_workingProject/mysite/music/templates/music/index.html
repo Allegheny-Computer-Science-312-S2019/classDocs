@@ -1,0 +1,12 @@
+<img src = "http://www.cs.allegheny.edu/sites/obonhamcarter/cs312/graphics/music.jpg">
+{% if all_albums %}
+<h1> This is the file: index.html </h1>
+ <ul>
+      {% for album in all_albums %}
+      <li><a href="/music/{{ album.id }}">{{ album.album_title }}</a></li>
+
+      {% endfor %}
+  </ul>
+{% else %}
+  <h3> You do not have any albums to display. </h3>
+{% endif %}
