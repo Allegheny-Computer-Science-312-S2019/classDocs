@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PetsAndPlants>
+   <Dog> Flint </Dog> <!--this is a child element-->
+   <Cat> Tiger </Cat>
+   <Fish> Wanda </Fish>
+   <Plant> Plantacious </Plant>
+</PetsAndPlants>
