@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+	<Placemark>
+		<name>(This is NAME) Beijing, China</name>
+		<description>(This is Desc) Metropolis located in China</description>
+		<Point>
+			<coordinates>39°54′N,116°24′E</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Denver, CO</name>
+		<description>Located in Colorado</description>
+		<Point>
+			<coordinates>39°44′N,104°59′W</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>New York</name>
+		<description>Located in the state of New York</description>
+		<Point>
+			<coordinates>40°40′N,73°56′W</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+
+
+	<Placemark>
+		<name>Lincoln, NE</name>
+		<description>Capital of Nebraska</description>
+		<Point>
+			<coordinates>40°49′N,96°41′W</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Pittsburgh, PA</name>
+		<description>Has yellow bridges to cross its river</description>
+		<Point>
+			<coordinates>40°27′N,80°00′W</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+
+	<Placemark>
+		<name>Greenwich, England</name>
+		<description>It is commonly used in practice to refer to Coordinated Universal Time (UTC) when this is viewed as a time zone, especially by bodies connected with the United Kingdom, such as the BBC World Service</description>
+		<Point>
+			<coordinates>51°29′N,0°00′E/W</coordinates> # lat, long
+		</Point>
+	</Placemark>
+
+
+
+
+</Document>
+</kml>

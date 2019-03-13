@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!-- ref https://www.w3schools.com/xml/tryit.asp?filename=try_dom_parsertest3 -->
+
+<p id="demo"></p>
+
+<script>
+var x, i, xmlDoc;
+var txt = "";
+var text = "<book>" +
+"<title>The Hound of the Baskervilles</title>" +
+"<author>Arthur Conan Doyal</author>" +
+"<year>1902</year>" +
+"</book>";
+
+parser = new DOMParser();
+xmlDoc = parser.parseFromString(text,"text/xml");
+
+// documentElement always represents the root node
+x = xmlDoc.documentElement.childNodes;
+for (i = 0; i < x.length ;i++) {
+  txt += x[i].nodeName + ": " + x[i].childNodes[0].nodeValue + "<br>";
+}
+document.getElementById("demo").innerHTML = txt;
+</script>
+
+</body>
+</html>
