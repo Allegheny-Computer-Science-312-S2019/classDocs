@@ -1,0 +1,46 @@
+
+
+db.Country.drop()
+
+db.Country.insert({
+   language_en: "English",
+   language_fr: "anglais",
+   country_en: "England",
+   country_fr :"l'angleterre"
+   })
+
+   db.Country.insert({
+   language_en: "French",
+   language_fr: "francais",
+   country_en: "France",
+   country_fr :"la France"
+})
+
+db.Country.insert({
+   language_en: "Italian",
+   language_fr: "italien",
+   country_en: "Italy",
+   country_fr :"l'Italie"
+})
+
+
+
+
+
+
+
+db.Greetings.drop()
+
+db.Greetings.insert({"Hello":"English greeting"})
+db.Greetings.insert({"Goodbye":"English farewell "})
+
+db.Greetings.insert({"Bonjour":"French greeting"})
+db.Greetings.insert({"Au revoir":"French farewell"})
+
+db.Greetings.insert({"Buongiorno":"Italian greeting"})
+db.Greetings.insert({"Arrivederci":"Italian farewell"})
+
+
+
+db.Greetings.find({}).pretty();
+db.Greetings.find({},{_id:0}).pretty();
