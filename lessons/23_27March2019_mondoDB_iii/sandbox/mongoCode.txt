@@ -1,0 +1,29 @@
+# Date 25 March 2019
+# MongoDB
+
+# insertions
+db.people.insert({name:'James Bond', shoes:'brown'})
+db.people.insert({name:'S. Holmes', shoes:'black'})
+db.people.insert({name:'Wonder Woman', shoes:'boots'})
+db.people.insert({name:'Batman', shoes:'black'})
+db.people.insert({name:'Flash', shoes:'slippers'})
+
+
+
+
+# queries
+db.people.find()
+db.people.find().pretty()
+
+
+# specific queries
+db.people.find({shoes:'brown'})
+db.people.find({shoes:'black'})
+db.people.find({},{"name":1,"shoes":'brown',"_id":0})
+db.people.find({},{"name":1,"shoes":'black',"_id":0})
+db.people.find({},{"name":1,"shoes":'boots',"_id":0})
+db.people.find({shoes:'black'}).pretty()
+db.people.find({shoes:'boots'}).pretty()
+db.people.find({name:'Wonder Woman'}).pretty()
+db.people.find({name:'Batman'}).pretty()
+db.people.find({"name":"S. Holmes"},{"shoes":'boots',"_id":0}).pretty()

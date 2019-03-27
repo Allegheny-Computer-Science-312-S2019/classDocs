@@ -1,0 +1,50 @@
+// date: 2 April 2018
+// MongoDB data file. Note, this file follows from the mondoCode_2April2018.txt file.
+
+
+db.customers.insert([
+
+{
+  first_name: "John",
+  last_name: "Doe",
+  age:20,
+  memberships: ["mem1", "mem2"],
+  address: {
+        street: "4 Main street",
+        city: "Meadville"
+    },
+  contactsRefs: [{name: "Brad",relationship: "coworker"}]
+},
+{
+  first_name: "Jack",
+  last_name: "Robes",
+  age: 50,
+  memberships: ["mem4", "mem5"],
+  address: {
+        street: "8 Sweet street",
+        city: "Meadville"
+    },
+  contactsRefs: [{name: "Brad",relationship: "coworker"}]
+},
+{
+  first_name: "Mary",
+  last_name: "Johnson",
+  age: 29,
+  memberships: ["mem1", "mem2"],
+  address: {
+        street: "5 Market street",
+        city: "Meadville"
+    },
+  contactsRefs: [{name: "Joan",relationship: "projectManager"}]
+}])
+
+
+// add several names at the same using an array.
+db.customers.insert([
+{first_name: "John", "last_name": "Doe"},
+{first_name: "James", "last_name": "Bond"},
+{first_name: "Jason", "last_name": "Smith"},
+{first_name: "Susan", "last_name": "Doe", gender: "female"},
+{first_name: "Martha", "last_name": "Bond"},
+{first_name: "Sam", "last_name": "Smith", gender: "female"},
+]);
