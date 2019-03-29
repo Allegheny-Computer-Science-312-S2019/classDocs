@@ -1,0 +1,31 @@
+# date: 29 March 2019
+# file: syntheticData_small.json
+# collection: employee
+# Questions for queries activity
+
+
+1) Show all records from employee database
+> db.employee.find().pretty()
+
+2) Show only the record for the company, "RADIANTIX"
+ db.employee.find({company:"RADIANTIX"},{}).pretty()
+
+
+3) Give all "company" details from each record in employee database
+> db.employee.find({},{company:1}).pretty()
+
+4) Show the friends of the above company.
+> db.employee.find({company:"RADIANTIX"},{"friends":1}).pretty()
+
+5) Show the friends of the company and its address.
+> db.employee.find({company:"RADIANTIX"},{"friends":1,"address":1 }).pretty()
+
+6) Show age, first name, last name and result of "isActive" for the contact at RADIANTIX.
+>db.employee.find({company:"RADIANTIX"},{"name.first":1, "name.last":1, "age":1,"isActive":1 }).pretty()
+
+7) In addition to the above details, show the tags details as well.
+> db.employee.find({company:"RADIANTIX"},{"name.first":1, "name.last":1, "age":1,"isActive":1,"tags":1 }).pretty()
+
+8) Pick another company and run these same queries.
+
+9) Can you find another general "attribute" for a particular record to query some specific conditions?
