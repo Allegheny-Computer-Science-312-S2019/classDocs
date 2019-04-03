@@ -1,3 +1,5 @@
+#date: 3 April 2019
+
 db.restaurants.insertMany( [
 { "_id" : 1, "name": "Central Perk Cafe", "Borough": "Manhattan" },
 { "_id" : 2, "name": "Rock A Feller Bar and Grill", "Borough": "Queens", "violations": 2 },
@@ -6,3 +8,31 @@ db.restaurants.insertMany( [
 { "_id" : 5, "name": "The Resto in a Cave", "Borough": "Paris", "violations": 0 },
 { "_id" : 6, "name": "The Crow Bar", "Borough": "Paris", "violations": 98, "note": "gross"}
 ]);
+
+
+
+db.restaurants.find().pretty()
+
+
+
+db.restaurants.updateOne(
+{"name":"Empire State Pub"},
+{ $set: {
+rating: "Thumbs-Up",
+status: "Loved it!" },
+$currentDate: { lastModified: true }
+});
+
+
+
+db.restaurants.updateOne(
+{"name":"The Resto in a Cave"},
+{
+$set:
+{
+rating: "Musty",
+status: "Dirty and full of rocks!!!",
+kitchenQuality: "A fire in the floor",
+Note: "The waiter was a bear who chased me."},
+$currentDate: { lastModified: true }
+});
