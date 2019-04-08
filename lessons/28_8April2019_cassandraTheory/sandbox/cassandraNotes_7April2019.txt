@@ -1,0 +1,72 @@
+/* Date: 8 April 2019 */
+/* Simple Cassandra Commands */
+
+
+create keyspace myDB with replication =
+{ 'class':'SimpleStrategy',
+ 'replication_factor':1 };
+
+
+
+ use mydb;
+
+
+ create table emp(
+   empid int primary key,
+   emp_first varchar,
+   emp_last varchar,
+   emp_dept varchar);
+
+
+
+
+   insert into emp
+     ( empid, emp_first,emp_last,emp_dept )
+      values ( 1, 'Fred','Smith','English' );
+   insert into emp
+     ( empid,emp_first,emp_last,emp_dept )
+      values ( 2, 'Bob','Alison','English' );
+   insert into emp
+     ( empid,emp_first,emp_last,emp_dept )
+      values ( 3, 'Judy','Miller','French' );
+   insert into emp
+     ( empid,emp_first,emp_last,emp_dept )
+      values ( 4, 'Jasmin','Jones','Computer Science' );
+
+
+
+      insert into emp
+         (empid, emp_first, emp_last, emp_dept)
+         values (5,'Megan','Douglas','French');
+      insert into emp
+         (empid, emp_first, emp_last, emp_dept)
+         values (6,'Carol','Miller','English');
+      insert into emp
+         (empid, emp_first, emp_last, emp_dept)
+         values (7,'Alice','Wilkins','French');
+       insert into emp
+          (empid, emp_first, emp_last, emp_dept)
+          values (8,'Monroe','Monderson','Computer Science');
+
+
+describe schema;
+
+select * from emp;
+
+select * from emp where emp_dept = 'English';
+#try creating an index and run again...
+create index idx_dept on emp(emp_dept);
+
+
+select * from emp where emp_first = 'Fred';
+#create index
+create index idx_first on emp(emp_first);
+select * from emp where emp_first = 'Fred';
+
+select * from emp where emp_last = 'Miller';
+#create index
+create index idx_last on emp(emp_last);
+select * from emp where emp_last = 'Miller';
+
+
+drop keyspace mydb;
