@@ -1,0 +1,120 @@
+// date: 10 April 2019
+// Cassandra query examples.
+// ref: https://docs.datastax.com/en/cql/3.1/cql/ddl/ddl_music_service_c.html
+
+// Start a new keyspace for this demo (if you have not already done so)
+
+create keyspace mydb with replication =  { 'class':'SimpleStrategy', 'replication_factor':1 };
+// otherwise if you already have that keyspace available, use it. 
+We set the replication factor here. Increasing the replication factor increases the total number of copies of keyspace data stored in a Cassandra cluster.
+
+use mydb
+
+
+//Check what tables are already there
+describe tables
+
+
+
+
+
+
+// //////////////////////////////////////////////////////
+// ref: https://docs.datastax.com/en/cql/3.1/cql/ddl/ddl_music_service_c.html
+CREATE TABLE songs (
+  id uuid PRIMARY KEY,
+  title text,
+  album text,
+  artist text,
+  data blob
+ );
+
+INSERT INTO songs (id, title, album, artist, data) VALUES (62c36092-82a1-3a00-93d1-46196ee77204, 'Fu_title', 'Fu_album','Fu_artist',textAsBlob('Fu_blob'));
+
+
+
+ CREATE TABLE playlists (
+  id uuid,
+  song_order int,
+  song_id uuid,
+  title text,
+  album text,
+  artist text,
+  PRIMARY KEY  (id, song_order ) );
+
+
+// Note: The UUID is handy for sequencing the data or automatically incrementing synchronization across multiple machines. For simplicity, an int song_order is used in this example.
+
+
+// playlists data
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+VALUES (62c36092-82a1-3a00-93d1-46196ee77204, 4,
+7db1a490-5878-11e2-bcfd-0800200c9a66,
+'Ojo Rojo', 'Fu Manchu', 'No One Rides for Free');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+VALUES (62c36092-82a1-3a00-93d1-46196ee77206, 3,
+7db1a490-5878-11e2-bcfd-0800200c9a68,
+'Green and The Other Colors in the Rainbow', 'Kermit the Frog', 'Funky Lilly Pad');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+VALUES (62c36092-82a1-3a00-93d1-46196ee77207, 1,
+7db1a490-5878-11e2-bcfd-0800200c9a69,
+'Shovin the Lovin -- cookies in my mouth', 'Cookie Monster', 'Blue Carpet Disaster');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+VALUES (62c36092-82a1-3a00-93d1-46196ee77205, 2,
+7db1a490-5878-11e2-bcfd-0800200c9a67,
+'Singin With Lovin', 'Roy Ray Robinson', 'The Sun Shine on Your Shoulders');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+VALUES (62c36092-82a1-3a00-93d1-46196ee77207, 1,
+7db1a490-5878-11e2-bcfd-0800200c9a69,
+'Dance to me', 'Dance Floor Dolls', 'Electric Motion');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+  VALUES (62c36092-82a1-3a00-93d1-46196ee77204, 1,
+  a3e64f8f-bd44-4f28-b8d9-6938726e34d4, 'La Grange', 'ZZ Top', 'Tres Hombres');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+  VALUES (62c36092-82a1-3a00-93d1-46196ee77204, 2,
+  8a172618-b121-4136-bb10-f665cfc469eb, 'Moving in Stereo', 'Fu Manchu', 'We Must Obey');
+
+INSERT INTO playlists (id, song_order, song_id, title, artist, album)
+  VALUES (62c36092-82a1-3a00-93d1-46196ee77204, 3,
+  2b09185b-fb5a-4734-9b56-49077de9edbf, 'Outside Woman Blues', 'Back Door Slam', 'Roll Away');
+
+
+SELECT * FROM playlists;
+
+
+
+
+INSERT INTO songs (id, title, album, artist, data)
+VALUES
+(62c36092-82a1-3a00-93d1-46196ee77204,
+'Fu_title',
+'Fu_album',
+'Fu_artist',
+textAsBlob('Fu_blob'));
+
+select * from playlists
+where id = 62c36092-82a1-3a00-93d1-46196ee77205;
+
+select album from playlists
+where id = 62c36092-82a1-3a00-93d1-46196ee77205;
+
+select  album, title from playlists
+where id = 62c36092-82a1-3a00-93d1-46196ee77205;
+
+
+SELECT album, title FROM playlists WHERE artist = 'Fu Manchu';
+//Cassandra will reject this query because the query requires a sequential scan across the entire playlists dataset, since artist is not a partition key or clustering column. We create an index on artist, Cassandra can now pull out the records.
+
+//Index Memberships
+CREATE INDEX ON playlists( artist );
+//Now, you can query the playlists for songs by Fu Manchu. The output looks like this:
+
+select * from playlists where artist = 'Fu Manchu';
+select * from playlists where artist = 'Kermit the Frog';
